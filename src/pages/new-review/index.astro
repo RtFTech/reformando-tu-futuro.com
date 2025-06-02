@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const { url } = Astro.request;
+const searchParams = new URL(url).searchParams;
+const newRewiewUrl = searchParams.get("new_review_url");
+const error = searchParams.get("error");
+---
+
+<Layout>
+  <div class="row p-5 justify-content-center">
+    <form method="POST" action="/api/create-token">
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="form-group mb-2">
+          <label for="secret-key">Ingresa la clave:</label>
+          <div class="input-group mb-2">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="secret-key"
+              placeholder="Clave"
+              required={true}
+            />
+            <div class="input-group-prepend">
+              <button
+                id="get-review-token-button"
+                class="input-group-text"
+                type="button"
+              >
+                Mostrar
+              </button>
+            </div>
+          </div>
+
+          {error && <small class="text-danger">{error}</small>}
+          {
+            newRewiewUrl && (
+              <small class="text-success">
+                Url para la review: {newRewiewUrl}
+              </small>
+            )
+          }
+        </div>
+        <button type="submit" class="btn btn-primary"> Confirmar </button>
+      </div>
+    </form>
+
+    <script src="/js/new-review-key.js" is:inline></script>
+  </div>
+</Layout>

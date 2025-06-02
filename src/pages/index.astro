@@ -1,11 +1,423 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import ReviewComponent from "../components/Review.astro";
+import type { PostgrestResponse } from "@supabase/supabase-js";
+import Layout from "../layouts/Layout.astro";
+import { supabase } from "../lib/supabase";
+import type { Review } from "../types/review";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const { data: reviews, error }: PostgrestResponse<Review> = await supabase
+  .from("reviews")
+  .select("*")
+  .limit(3)
+  .order("created_at", { ascending: false });
+
+if (error) {
+  console.error("Error fetching reviews:", error.message);
+}
 ---
 
 <Layout>
-	<Welcome />
+  <section class="navbar-area navbar-nine">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/">
+              <img
+                src="images/m&r-logo-white.png"
+                alt="Logo"
+                style={{
+                  width: "150px",
+                }}
+              />
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNine"
+              aria-controls="navbarNine"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+              <span class="toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse sub-menu-bar" id="navbarNine">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item menu">
+                  <a class="page-scroll active" href="#inicio"> Inicio </a>
+                </li>
+                <li class="nav-item menu">
+                  <a class="page-scroll" href="#servicios"> Servicios </a>
+                </li>
+
+                <li class="nav-item menu">
+                  <a class="page-scroll" href="#proyectos"> Proyectos </a>
+                </li>
+                <li class="nav-item menu">
+                  <a class="page-scroll" href="#clientes"> Clientes </a>
+                </li>
+                <li class="nav-item menu">
+                  <a class="page-scroll" href="#contacto"> Contacto </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inicio" class="header-area header-eight">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-md-12 col-12">
+          <div class="header-content">
+            <h1>Reformas personalizadas para cada cliente</h1>
+            <p>
+              Cada proyecto es único. Ofrecemos soluciones a medida para tu
+              hogar o negocio.
+            </p>
+            <div class="button">
+              <a href="#contacto" class="btn primary-btn">
+                Contáctanos ahora
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-12">
+          <div class="header-image">
+            <img src="images/header/header-image.png" alt="#" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios" class="services-area services-eight">
+    <div class="section-title-five">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="content">
+              <h6>Servicios</h6>
+              <h2 class="fw-bold">Nuestros servicios</h2>
+              <p>
+                Soluciones integrales para todos tus Proyectos de Construcción
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-home"></i>
+            </div>
+            <div class="service-content">
+              <h4>Renovaciones y Remodelaciones</h4>
+              <p>
+                Transformamos espacios existentes, dándoles una nueva vida con
+                nuestras soluciones de remodelación.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-brush"></i>
+            </div>
+            <div class="service-content">
+              <h4>Pintura y Decoración</h4>
+              <p>
+                Ofrecemos servicios de pintura profesional para interiores y
+                exteriores, mejorando la estética de tu propiedad.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-chef-hat"></i>
+            </div>
+            <div class="service-content">
+              <h4>Reformas de Cocinas</h4>
+              <p>
+                Diseñamos y renovamos cocinas modernas y funcionales para
+                adaptarlas a tu estilo de vida.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-reload"></i>
+            </div>
+            <div class="service-content">
+              <h4>Reformas de Baños</h4>
+              <p>
+                Actualizamos baños con diseños elegantes y materiales de alta
+                calidad para mayor comodidad y estilo.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-warning"></i>
+            </div>
+            <div class="service-content">
+              <h4>Servicio de Emergencias</h4>
+              <p>
+                Atendemos emergencias de construcción con rapidez y
+                profesionalismo para minimizar interrupciones.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-services">
+            <div class="service-icon">
+              <i class="lni lni-paperclip"></i>
+            </div>
+            <div class="service-content">
+              <h4>Diseño y Planificación</h4>
+              <p>
+                Creamos planos detallados y personalizados que se adaptan a tus
+                necesidades y visión.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="proyectos" class="latest-news-area section">
+    <div class="section-title-five">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="content">
+              <h6>Proyectos</h6>
+              <h2 class="fw-bold">Proyectos Realizados</h2>
+              <p>
+                Una muestra de nuestra experiencia y dedicación en cada proyecto
+                de construcción.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="single-news">
+            <div class="image">
+              <img
+                class="thumb"
+                src="images/projects/project-2.jpeg"
+                alt="Blog"
+              />
+            </div>
+            <div class="content-body">
+              <h4 class="title">
+                Transformación Integral de Farmacia en Valdebebas
+              </h4>
+              <p>
+                Transformación completa de farmacia: Espacio moderno y funcional
+                con una nueva distribución para mejorar la atención al cliente.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="single-news">
+            <div class="image">
+              <img
+                class="thumb"
+                src="images/projects/project-4.jpeg"
+                alt="Blog"
+              />
+            </div>
+            <div class="content-body">
+              <h4 class="title">Reforma Integral de Baño en Conde de Casal</h4>
+              <p>
+                Diseñamos un baño elegante y práctico, combinando materiales
+                duraderos con un diseño estético atractivo. Incorporamos
+                modernas instalaciones para maximizar el confort y la
+                funcionalidad del espacio.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="single-news">
+            <div class="image">
+              <img
+                class="thumb"
+                src="images/projects/project-9.jpeg"
+                alt="Blog"
+              />
+            </div>
+            <div class="content-body">
+              <h4 class="title">Reforma Completa de Cocina en Chamberí</h4>
+              <p>
+                Convertimos una cocina anticuada en un espacio culinario
+                práctico y cómodo implementando un espacio abierto y ergonómico
+                con electrodomésticos modernos y acabados de calidad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="clientes" class="brand-area section">
+    <div class="section-title-five">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="content">
+              <h6>Clientes</h6>
+              <h2 class="fw-bold">Clientes Satisfechos</h2>
+              <p>
+                La Satisfacción de Nuestros Clientes es Nuestra Prioridad.
+                Conoce el testimonio de algunos de ellos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        {
+          reviews?.map((review) => {
+            return (
+              <div class="col-12 col-md-6 col-xl-4 mb-5">
+                <ReviewComponent review={review} />
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <section id="contacto" class="contact-section call-action">
+    <div class="inner-content px-1">
+      <h2>Hablemos de tu proyecto</h2>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="contact-item-wrapper">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="lni lni-phone"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>Contacto</h4>
+                  <a href="https://wa.me/34640113953" target="blank">
+                    <p>+34640113953</p>
+                  </a>
+                  <br />
+                  {
+                    /* TODO: Ajustar este correo cuando tengamos configurado el dominio */
+                  }
+                  <a href="mailto:contacto@reformasmr2.es" target="blank">
+                    <p>contacto@reformasmr2.es</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="lni lni-map-marker"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>Dirección</h4>
+                  <a
+                    href="https://maps.app.goo.gl/Ssp4UDegY3gMz8CY9"
+                    target="blank"
+                  >
+                    <p>Calle de Toledo 50</p>
+                    <p>28939 - Arroyomolinos</p>
+                    <p>Madrid, España</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="lni lni-alarm-clock"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>Horario</h4>
+                  <p>Lunes - Viernes</p>
+                  <p>9 AM - 6:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-area footer-eleven">
+    <div class="footer-top">
+      <div class="container">
+        <div class="inner-content">
+          <div class="row">
+            <div class="footer-widget f-about row">
+              <div class="logo">
+                <a href="/">
+                  <img
+                    src="images/m&r-logo.png"
+                    alt="#"
+                    class="img-fluid"
+                    style={{
+                      width: "150px",
+                    }}
+                  />
+                </a>
+              </div>
+              <p class="copyright-text">
+                <span class="font-weight-bold">
+                  © 2024 M&r2 Reformas y pintura S.L.
+                </span>
+                <span>Todos los derechos reservados</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="scroll-top btn-hover">
+    <i class="lni lni-chevron-up"></i>
+  </a>
+
+  <script src="/js/main.js" is:inline></script>
 </Layout>
