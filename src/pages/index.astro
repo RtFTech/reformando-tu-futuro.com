@@ -8,12 +8,14 @@ import type { Review } from "../types/review";
 const { data: reviews, error }: PostgrestResponse<Review> = await supabase
   .from("reviews")
   .select("*")
-  .limit(3)
+  .limit(4)
   .order("created_at", { ascending: false });
 
 if (error) {
   console.error("Error fetching reviews:", error.message);
 }
+
+const year = new Date().getFullYear();
 ---
 
 <Layout>
@@ -24,7 +26,7 @@ if (error) {
           <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="/">
               <img
-                src="images/m&r-logo-white.png"
+                src="images/logo.jpg"
                 alt="Logo"
                 style={{
                   width: "150px",
@@ -74,23 +76,14 @@ if (error) {
   <section id="inicio" class="header-area header-eight">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6 col-md-12 col-12">
-          <div class="header-content">
-            <h1>Reformas personalizadas para cada cliente</h1>
-            <p>
-              Cada proyecto es único. Ofrecemos soluciones a medida para tu
-              hogar o negocio.
-            </p>
-            <div class="button">
-              <a href="#contacto" class="btn primary-btn">
-                Contáctanos ahora
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-12 col-12">
-          <div class="header-image">
-            <img src="images/header/header-image.png" alt="#" />
+        <div class="header-content">
+          <h1>Reformas personalizadas para cada cliente</h1>
+          <p>
+            Cada proyecto es único. Ofrecemos soluciones a medida para tu hogar
+            o negocio.
+          </p>
+          <div class="button">
+            <a href="#contacto" class="btn primary-btn"> Contáctanos ahora </a>
           </div>
         </div>
       </div>
@@ -309,7 +302,7 @@ if (error) {
         {
           reviews?.map((review) => {
             return (
-              <div class="col-12 col-md-6 col-xl-4 mb-5">
+              <div class="col-12 col-md-6 col-xl-3 mb-5">
                 <ReviewComponent review={review} />
               </div>
             );
@@ -334,15 +327,15 @@ if (error) {
                 </div>
                 <div class="contact-content">
                   <h4>Contacto</h4>
-                  <a href="https://wa.me/34640113953" target="blank">
-                    <p>+34640113953</p>
+                  <a href="https://wa.me/34600819792" target="blank">
+                    <p>+34600819792</p>
                   </a>
                   <br />
                   {
                     /* TODO: Ajustar este correo cuando tengamos configurado el dominio */
                   }
-                  <a href="mailto:contacto@reformasmr2.es" target="blank">
-                    <p>contacto@reformasmr2.es</p>
+                  <a href="mailto:reformandotufuturo@gmail.com" target="blank">
+                    <p>reformandotufuturo@gmail.com</p>
                   </a>
                 </div>
               </div>
@@ -356,11 +349,12 @@ if (error) {
                 <div class="contact-content">
                   <h4>Dirección</h4>
                   <a
-                    href="https://maps.app.goo.gl/Ssp4UDegY3gMz8CY9"
+                    href="https://maps.app.goo.gl/EJfKiM6FWhpssc7e8"
                     target="blank"
                   >
-                    <p>Calle de Toledo 50</p>
-                    <p>28939 - Arroyomolinos</p>
+                    <p>Calle Puentelarra 12</p>
+                    <p class="small">(Escalera derecha 5ºB)</p>
+                    <p>28031 - Vallecas</p>
                     <p>Madrid, España</p>
                   </a>
                 </div>
@@ -393,7 +387,7 @@ if (error) {
               <div class="logo">
                 <a href="/">
                   <img
-                    src="images/m&r-logo.png"
+                    src="images/logo-inverted.jpg"
                     alt="#"
                     class="img-fluid"
                     style={{
@@ -404,7 +398,7 @@ if (error) {
               </div>
               <p class="copyright-text">
                 <span class="font-weight-bold">
-                  © 2024 M&r2 Reformas y pintura S.L.
+                  © {year} REFORMANDO TU FUTURO C&R S.L.
                 </span>
                 <span>Todos los derechos reservados</span>
               </p>
