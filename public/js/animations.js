@@ -82,7 +82,7 @@ function textAnimationB(selector, flag, texts) {
 
 const subtitleTexts = [
   "Tu proyecto comienza con una buena decisión: calidad, confianza y experiencia al servicio de tu reforma.",
-  "Especialistas en reformas integrales, rehabilitación y construcción a medida.",
+  "Especialistas en reformas integrales, rehabilitación y construcción a medida. Tu hogar, como siempre lo soñaste.",
 ];
 let mainSubtitleFlag = false;
 textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
