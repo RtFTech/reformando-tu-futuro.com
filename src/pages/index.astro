@@ -77,8 +77,10 @@ const year = new Date().getFullYear();
     <div class="container">
       <div class="row align-items-center">
         <div class="header-content">
-          <h1>Reformas y Construcción de Calidad para Transformar tu Futuro</h1>
-          <p>
+          <h1 id="main-title">
+            Reformas y Construcción de Calidad para Transformar tu Futuro
+          </h1>
+          <p id="main-subtitle">
             Tu proyecto comienza con una buena decisión: calidad, confianza y
             experiencia al servicio de tu reforma.
           </p>
@@ -98,7 +100,7 @@ const year = new Date().getFullYear();
             <div class="content">
               <h6>Servicios</h6>
               <h2 class="fw-bold">Nuestros servicios</h2>
-              <p>
+              <p id="our-services">
                 Conoce todo lo que podemos hacer por tu espacio: reformas
                 personalizadas, construcción, interiorismo y más. Tu futuro,
                 bien construido.
@@ -198,7 +200,11 @@ const year = new Date().getFullYear();
     </div>
   </section>
 
-  <div id="proyectos" class="latest-news-area section">
+  <div
+    id="proyectos"
+    class="latest-news-area section"
+    style="background-color: black;"
+  >
     <div class="section-title-five">
       <div class="container">
         <div class="row">
@@ -206,9 +212,9 @@ const year = new Date().getFullYear();
             <div class="content">
               <h6>Proyectos</h6>
               <h2 class="fw-bold">Proyectos Realizados</h2>
-              <p>
-                Una muestra de nuestra experiencia y dedicación en cada proyecto
-                de construcción.
+              <p id="our-projects">
+                Te mostramos una selección de reformas y construcciones que
+                hemos realizado con dedicación, calidad y atención al detalle.
               </p>
             </div>
           </div>
@@ -405,4 +411,5 @@ const year = new Date().getFullYear();
   </a>
 
   <script src="/js/main.js" is:inline></script>
+  <script src="/js/animations.js" is:inline></script>
 </Layout>
