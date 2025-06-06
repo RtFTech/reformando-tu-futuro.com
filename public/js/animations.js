@@ -85,21 +85,18 @@ const subtitleTexts = [
   "Especialistas en reformas integrales, rehabilitación y construcción a medida. Tu hogar, como siempre lo soñaste.",
 ];
 let mainSubtitleFlag = false;
-textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
 
 const servicesTexts = [
   "Conoce todo lo que podemos hacer por tu espacio: reformas personalizadas, construcción, interiorismo y más. Tu futuro, bien construido.",
   "Te acompañamos en cada etapa de tu proyecto: planificación, diseño, ejecución y acabados. Reformas eficientes, modernas y a tu medida.",
 ];
 let servicesFlag = false;
-textAnimationA("#our-services", servicesFlag, servicesTexts);
 
 const projectsTexts = [
   "Te mostramos una selección de reformas y construcciones que hemos realizado con dedicación, calidad y atención al detalle.",
   "Diseñamos y ejecutamos soluciones reales para personas reales. Conoce los resultados de confiar en 'Reformando tu futuro'.",
 ];
 let projectsFlag = false;
-textAnimationA("#our-projects", projectsFlag, projectsTexts);
 
 // scroll animation
 function initServicesAnimation(selector) {
@@ -175,6 +172,9 @@ function initServicesAnimation(selector) {
 document.addEventListener("DOMContentLoaded", () => {
   initServicesAnimation(".single-services");
   initServicesAnimation(".single-news");
+  textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
+  textAnimationA("#our-services", servicesFlag, servicesTexts);
+  textAnimationA("#our-projects", projectsFlag, projectsTexts);
 });
 
 // Fallback initialization if DOMContentLoaded already fired
@@ -182,8 +182,14 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initServicesAnimation(".single-services");
     initServicesAnimation(".single-news");
+    textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
+    textAnimationA("#our-services", servicesFlag, servicesTexts);
+    textAnimationA("#our-projects", projectsFlag, projectsTexts);
   });
 } else {
   initServicesAnimation(".single-services");
   initServicesAnimation(".single-news");
+  textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
+  textAnimationA("#our-services", servicesFlag, servicesTexts);
+  textAnimationA("#our-projects", projectsFlag, projectsTexts);
 }
