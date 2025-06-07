@@ -1,102 +1,80 @@
-function textAnimationA(selector, flag, texts) {
+function textAnimation(selector, textArray) {
   const textWrapper = document.querySelector(selector);
+  let currentIndex = 0;
 
-  textWrapper.textContent = texts[0];
-  textWrapper.innerHTML = textWrapper.textContent.replace(
-    /\S/g,
-    "<span class='letter'>$&</span>"
-  );
+  function setupText(text) {
+    textWrapper.textContent = text;
+    textWrapper.innerHTML = textWrapper.textContent.replace(
+      /\S/g,
+      "<span class='letter'>$&</span>"
+    );
 
-  anime
-    .timeline({
-      loop: false,
-      run: function (anim) {
-        const progess = Math.round(anim.progress);
-        if (progess === 100 && flag) {
-          flag = false;
-          textAnimationB(selector, flag, texts);
-        } else if (progess === 1) {
-          flag = true;
-        }
+    // Set initial state for new letters
+    const letters = textWrapper.querySelectorAll(".letter");
+    letters.forEach((letter) => {
+      letter.style.opacity = "0";
+      letter.style.transform = "translateX(40px)";
+    });
+  }
+
+  function createAnimation() {
+    // Create the timeline animation
+    const timeline = anime.createTimeline({
+      loop: false, // We'll handle looping manually
+      onComplete: () => {
+        // Move to next text
+        currentIndex = (currentIndex + 1) % textArray.length;
+        setupText(textArray[currentIndex]);
+
+        // Small delay before starting next animation
+        setTimeout(() => {
+          createAnimation();
+        }, 300);
       },
-    })
-    .add({
-      targets: `${selector} .letter`,
+    });
+
+    // Add the first animation step
+    timeline.add(`${selector} .letter`, {
       translateX: [40, 0],
       translateZ: 0,
       opacity: [0, 1],
-      easing: "easeOutExpo",
+      ease: "outExpo",
       duration: 600,
-      delay: (_el, i) => 500 + 15 * i,
-    })
-    .add({
-      targets: `${selector} .letter`,
+      delay: anime.stagger(15, { start: 500 }),
+    });
+
+    // Add the second animation step
+    timeline.add(`${selector} .letter`, {
       translateX: [0, -30],
       opacity: [1, 0],
-      easing: "easeInExpo",
+      ease: "inExpo",
       duration: 1200,
-      delay: (_el, i) => 100 + 10 * i,
+      delay: anime.stagger(10, { start: 100 }),
     });
-}
+  }
 
-function textAnimationB(selector, flag, texts) {
-  const textWrapper = document.querySelector(selector);
-
-  textWrapper.textContent = texts[1];
-  textWrapper.innerHTML = textWrapper.textContent.replace(
-    /\S/g,
-    "<span class='letter'>$&</span>"
-  );
-
-  anime
-    .timeline({
-      loop: false,
-      run: function (anim) {
-        const progess = Math.round(anim.progress);
-        if (progess === 100 && flag) {
-          flag = false;
-          textAnimationA(selector, flag, texts);
-        } else if (progess === 1) {
-          flag = true;
-        }
-      },
-    })
-    .add({
-      targets: `${selector} .letter`,
-      translateX: [40, 0],
-      translateZ: 0,
-      opacity: [0, 1],
-      easing: "easeOutExpo",
-      duration: 600,
-      delay: (_el, i) => 500 + 15 * i,
-    })
-    .add({
-      targets: `${selector} .letter`,
-      translateX: [0, -30],
-      opacity: [1, 0],
-      easing: "easeInExpo",
-      duration: 1200,
-      delay: (_el, i) => 100 + 10 * i,
-    });
+  // Initialize with first text
+  setupText(textArray[0]);
+  createAnimation();
 }
 
 const subtitleTexts = [
   "Tu proyecto comienza con una buena decisión: calidad, confianza y experiencia al servicio de tu reforma.",
   "Especialistas en reformas integrales, rehabilitación y construcción a medida. Tu hogar, como siempre lo soñaste.",
 ];
-let mainSubtitleFlag = false;
-
 const servicesTexts = [
   "Conoce todo lo que podemos hacer por tu espacio: reformas personalizadas, construcción, interiorismo y más. Tu futuro, bien construido.",
   "Te acompañamos en cada etapa de tu proyecto: planificación, diseño, ejecución y acabados. Reformas eficientes, modernas y a tu medida.",
 ];
-let servicesFlag = false;
 
 const projectsTexts = [
   "Te mostramos una selección de reformas y construcciones que hemos realizado con dedicación, calidad y atención al detalle.",
   "Diseñamos y ejecutamos soluciones reales para personas reales. Conoce los resultados de confiar en 'Reformando tu futuro'.",
 ];
-let projectsFlag = false;
+
+textAnimation("#main-subtitle", subtitleTexts);
+textAnimation("#our-services", servicesTexts);
+textAnimation("#our-projects", projectsTexts);
 
 // scroll animation
 function initServicesAnimation(selector) {
@@ -126,31 +104,28 @@ function initServicesAnimation(selector) {
         const cardIndex = Array.from(serviceCards).indexOf(card);
 
         // Animate the card when it comes into view
-        anime({
-          targets: card,
+        anime.animate(card, {
           opacity: [0, 1],
           translateY: [50, 0],
           scale: [0.9, 1],
           duration: 800,
           delay: cardIndex * 100, // Stagger animation
-          easing: "easeOutExpo",
-          complete: () => {
+          ease: "outExpo",
+          onComplete: () => {
             // Add subtle hover animation after initial animation
             card.addEventListener("mouseenter", () => {
-              anime({
-                targets: card,
+              anime.animate(card, {
                 scale: 1.05,
                 duration: 300,
-                easing: "easeOutQuad",
+                ease: "outQuad",
               });
             });
 
             card.addEventListener("mouseleave", () => {
-              anime({
-                targets: card,
+              anime.animate(card, {
                 scale: 1,
                 duration: 300,
-                easing: "easeOutQuad",
+                ease: "outQuad",
               });
             });
           },
@@ -172,9 +147,6 @@ function initServicesAnimation(selector) {
 document.addEventListener("DOMContentLoaded", () => {
   initServicesAnimation(".single-services");
   initServicesAnimation(".single-news");
-  textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
-  textAnimationA("#our-services", servicesFlag, servicesTexts);
-  textAnimationA("#our-projects", projectsFlag, projectsTexts);
 });
 
 // Fallback initialization if DOMContentLoaded already fired
@@ -182,14 +154,8 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initServicesAnimation(".single-services");
     initServicesAnimation(".single-news");
-    textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
-    textAnimationA("#our-services", servicesFlag, servicesTexts);
-    textAnimationA("#our-projects", projectsFlag, projectsTexts);
   });
 } else {
   initServicesAnimation(".single-services");
   initServicesAnimation(".single-news");
-  textAnimationA("#main-subtitle", mainSubtitleFlag, subtitleTexts);
-  textAnimationA("#our-services", servicesFlag, servicesTexts);
-  textAnimationA("#our-projects", projectsFlag, projectsTexts);
 }

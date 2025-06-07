@@ -1700,3 +1700,8 @@ p {
     gap: 10px;
   }
 }
+
+.letter {
+  opacity: 0;
+  transform: translateX(40px);
+}
