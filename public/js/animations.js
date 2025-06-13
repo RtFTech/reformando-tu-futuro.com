@@ -146,16 +146,13 @@ function initServicesAnimation(selector) {
 // Initialize animations when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   initServicesAnimation(".single-services");
-  initServicesAnimation(".single-news");
 });
 
 // Fallback initialization if DOMContentLoaded already fired
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initServicesAnimation(".single-services");
-    initServicesAnimation(".single-news");
   });
 } else {
   initServicesAnimation(".single-services");
-  initServicesAnimation(".single-news");
 }

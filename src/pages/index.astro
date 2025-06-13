@@ -1,5 +1,6 @@
 ---
 import ReviewComponent from "../components/Review.astro";
+import ProjectCarousel from "../components/ProjectCarousel.astro";
 import type { PostgrestResponse } from "@supabase/supabase-js";
 import Layout from "../layouts/Layout.astro";
 import { supabase } from "../lib/supabase";
@@ -14,6 +15,28 @@ const { data: reviews, error }: PostgrestResponse<Review> = await supabase
 if (error) {
   console.error("Error fetching reviews:", error.message);
 }
+
+// Generate image arrays for different project types
+const reformaIntegralImages = Array(11)
+  .fill(0)
+  .map(
+    (_, index) =>
+      `images/projects/reforma-integral/${index < 9 ? "0".concat((index + 1).toString()) : index + 1}.jpeg`
+  );
+
+const reformaBanosImages = Array(17)
+  .fill(0)
+  .map(
+    (_, index) =>
+      `images/projects/reforma-banos/${index < 9 ? "0".concat((index + 1).toString()) : index + 1}.jpeg`
+  );
+
+const duranteObraImages = Array(6)
+  .fill(0)
+  .map(
+    (_, index) =>
+      `images/projects/durante-obra/${index < 9 ? "0".concat((index + 1).toString()) : index + 1}.jpeg`
+  );
 
 const year = new Date().getFullYear();
 ---
@@ -223,56 +246,26 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="single-news">
-            <div class="image">
-              <img class="thumb" src="images/projects/02.jpeg" alt="Blog" />
-            </div>
-            <div class="content-body">
-              <h4 class="title">Reforma de baño en ZZZZ</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="single-news">
-            <div class="image">
-              <img class="thumb" src="images/projects/03.jpeg" alt="Blog" />
-            </div>
-            <div class="content-body">
-              <h4 class="title">Reforma de cocina en XXXX</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12">
-          <div class="single-news">
-            <div class="image">
-              <img class="thumb" src="images/projects/07.jpeg" alt="Blog" />
-            </div>
-            <div class="content-body">
-              <h4 class="title">Reforma de salón y comedor en YYYY</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProjectCarousel
+        category="Reformas Integrales"
+        images={reformaIntegralImages}
+        altPrefix="Reforma Integral"
+        id="reforma-integral"
+      />
+
+      <ProjectCarousel
+        category="Reformas de Baños"
+        images={reformaBanosImages}
+        altPrefix="Reforma de Baño"
+        id="reforma-banos"
+      />
+
+      <ProjectCarousel
+        category="Durante la obra"
+        images={duranteObraImages}
+        altPrefix="Durante la obra"
+        id="durante-obra"
+      />
     </div>
   </div>
 
@@ -412,4 +405,6 @@ const year = new Date().getFullYear();
 
   <script src="/js/main.js" is:inline></script>
   <script src="/js/animations.js" is:inline></script>
+  <script src="/js/multi-carousel.js" is:inline></script>
+  <script src="/js/lightbox.js" is:inline></script>
 </Layout>
