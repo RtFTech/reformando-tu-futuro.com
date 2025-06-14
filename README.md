@@ -10,18 +10,18 @@ This project has automated CI/CD configured for continuous deployment:
 
 - **Account**: reformandotufuturo.tech@gmail.com
 - **Automatic deployments** are configured for:
-  - **Main branch** → Production deployment
+  - **Master branch** → Production deployment
   - **Develop branch** → Preview deployment
 
 #### **Deployment Process**
 
 1. **Push to develop** → Triggers preview deployment for testing
-2. **Push to main** → Triggers production deployment
+2. **Push to master** → Triggers production deployment
 3. **Pull requests** → Generate preview deployments for review
 
 #### **Branch Strategy**
 
-- `main` - Production-ready code
+- `master` - Production-ready code
 - `develop` - Development and testing
 - Feature branches → Create PR to `develop`
 
