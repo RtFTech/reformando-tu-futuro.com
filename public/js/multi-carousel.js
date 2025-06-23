@@ -191,3 +191,41 @@ document.addEventListener("DOMContentLoaded", function () {
   // Store carousels globally for potential cleanup
   window.carousels = carousels;
 });
+
+// Add click functionality to service cards
+document.addEventListener("DOMContentLoaded", function () {
+  const serviceCards = document.querySelectorAll(".single-services");
+  const proyectosSection = document.querySelector("#proyectos");
+
+  serviceCards.forEach((card) => {
+    card.style.cursor = "pointer";
+    card.addEventListener("click", function () {
+      // Smooth scroll to projects section
+      proyectosSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      // Optional: Add a slight delay before focusing on the first carousel
+      setTimeout(() => {
+        const firstCarousel = document.querySelector("#reforma-integral");
+        if (firstCarousel) {
+          firstCarousel.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 800);
+    });
+
+    // Add hover effect
+    card.addEventListener("mouseenter", function () {
+      this.style.transform = "translateY(-5px)";
+      this.style.transition = "transform 0.3s ease";
+    });
+
+    card.addEventListener("mouseleave", function () {
+      this.style.transform = "translateY(0)";
+    });
+  });
+});
