@@ -44,37 +44,91 @@ All deployments are automatic and include:
 /
 ├── public/                     # Static assets
 │   ├── css/                   # Stylesheets
+│   │   ├── bootstrap.min.css  # Bootstrap framework
 │   │   ├── carousel.css       # Carousel styling
+│   │   ├── glightbox.min.css  # GLightbox styles
 │   │   ├── lightbox.css       # Lightbox gallery styling
-│   │   └── style.css          # Main styles
+│   │   ├── lineicons.css      # LineIcons font styles
+│   │   ├── style.css          # Main styles
+│   │   └── tiny-slider.css    # Tiny slider styles
+│   ├── fonts/                 # Font files
+│   │   ├── LineIcons.eot      # LineIcons font formats
+│   │   ├── LineIcons.ttf
+│   │   ├── LineIcons.woff
+│   │   └── LineIcons.woff2
 │   ├── js/                    # JavaScript files
-│   │   ├── multi-carousel.js  # Carousel functionality
+│   │   ├── animations.js      # Page animations
+│   │   ├── bootstrap.bundle.min.js # Bootstrap JavaScript
+│   │   ├── glightbox.min.js   # GLightbox functionality
 │   │   ├── lightbox.js        # Lightbox functionality
-│   │   └── animations.js      # Page animations
+│   │   ├── main.js            # Main JavaScript
+│   │   ├── multi-carousel.js  # Carousel functionality
+│   │   ├── new-review-key.js  # Review key generation
+│   │   └── review.js          # Review functionality
 │   └── images/                # Image assets
-│       ├── logo.jpg           # Company logo
+│       ├── empty-star.svg     # Empty star icon
+│       ├── favicon.svg        # Site favicon
+│       ├── full-star.svg      # Full star icon
+│       ├── logo.jpg           # Main company logo
+│       ├── logo-horizontal.jpg # Horizontal logo variant
+│       ├── logo-horizontal-inverted.jpg # Horizontal inverted logo
+│       ├── logo-inverted.jpg  # Inverted logo for dark backgrounds
+│       ├── call-action/       # Call to action images
+│       │   └── overlay.png
+│       ├── header/            # Header background images
+│       │   ├── background.jpg
+│       │   ├── background-2.jpg
+│       │   ├── background-3.jpg
+│       │   └── header-image.png
 │       └── projects/          # Project photos
-│           ├── reforma-integral/    # Complete renovation photos
-│           ├── reforma-banos/       # Bathroom renovation photos
-│           └── durante-obra/        # Construction process photos
+│           ├── reforma-integral/    # Complete renovation photos (11 images)
+│           ├── reforma-banos/       # Bathroom renovation photos (17 images)
+│           └── durante-obra/        # Construction process photos (6 images)
 ├── src/
 │   ├── components/
 │   │   ├── ProjectCarousel.astro    # Reusable carousel component
-│   │   └── Review.astro             # Customer review component
+│   │   ├── Review.astro             # Customer review component
+│   │   └── Welcome.astro            # Welcome section component
 │   ├── layouts/
 │   │   └── Layout.astro             # Main page layout
 │   ├── lib/
 │   │   └── supabase.ts              # Supabase configuration
 │   ├── pages/
 │   │   ├── index.astro              # Homepage
+│   │   ├── 404.astro                # 404 error page
 │   │   ├── api/                     # API routes
-│   │   └── review/                  # Review system pages
+│   │   │   ├── create-token.ts      # Token creation API
+│   │   │   └── review/
+│   │   │       └── [token].ts       # Review token API
+│   │   ├── error/
+│   │   │   └── index.astro          # Error page
+│   │   ├── new-review/
+│   │   │   └── index.astro          # New review form
+│   │   ├── review/
+│   │   │   └── [token].astro        # Review submission page
+│   │   └── thank-you/
+│   │       └── index.astro          # Thank you page
 │   └── types/
 │       └── review.ts                # TypeScript types
-└── package.json
+├── .vscode/                    # VS Code configuration
+│   ├── extensions.json        # Recommended extensions
+│   └── launch.json            # Debug configuration
+├── astro.config.mjs           # Astro configuration
+├── tsconfig.json              # TypeScript configuration
+└── package.json               # Project dependencies and scripts
 ```
 
-## 🛠️ Getting Started
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/) v5.8.1
+- **Runtime**: Node.js 18+
+- **Database**: [Supabase](https://supabase.com/) for customer reviews
+- **Deployment**: [Vercel](https://vercel.com/) with server-side rendering
+- **Animations**: [Motion](https://motion.dev/) for smooth transitions
+- **Styling**: Custom CSS with Bootstrap components
+- **Image Gallery**: GLightbox for full-screen viewing
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -105,6 +159,8 @@ All deployments are automatic and include:
    npm run dev
    ```
 
+   The server will start with `--host` flag to allow external access.
+
 5. **Open your browser**
    Navigate to `http://localhost:4321`
 
@@ -112,28 +168,34 @@ All deployments are automatic and include:
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command                   | Action                                                       |
+| :------------------------ | :----------------------------------------------------------- |
+| `npm install`             | Installs dependencies                                        |
+| `npm run dev`             | Starts local dev server at `localhost:4321` with host access |
+| `npm run build`           | Build your production site to `./dist/`                      |
+| `npm run preview`         | Preview your build locally, before deploying                 |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`             |
+| `npm run astro -- --help` | Get help using the Astro CLI                                 |
 
-## � Environment Variables
+## 🔧 Environment Variables
 
 Create a `.env` file in the root directory with the following variables:
 
 ```env
 # Supabase Configuration (for customer reviews)
-PUBLIC_SUPABASE_URL=your_supabase_project_url
-PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
+
+# Secret key for token generation
+SECRET_KEY=your_random_secret_key
 
 # Example:
-# PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
-# PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
+# SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# SECRET_KEY=your-secure-random-key-here
 ```
+
+> **Note**: The environment variables do not use the `PUBLIC_` prefix as they are accessed server-side through `import.meta.env`.
 
 ### Setting up Supabase
 
@@ -153,8 +215,9 @@ PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 
 3. **Get your credentials** from Project Settings > API
-   - Copy the Project URL to `PUBLIC_SUPABASE_URL`
-   - Copy the anon public key to `PUBLIC_SUPABASE_ANON_KEY`
+   - Copy the Project URL to `SUPABASE_URL`
+   - Copy the anon public key to `SUPABASE_KEY`
+   - Generate a secure random string for `SECRET_KEY`
 
 ## 🖼️ Managing Project Images
 
@@ -205,9 +268,9 @@ PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 3. **Update image counts** in `src/pages/index.astro` if needed:
    ```astro
-   const reformaIntegralImages = Array(11) // Change number here
-   const reformaBanosImages = Array(17)    // Change number here
-   const duranteObraImages = Array(6)      // Change number here
+   const reformaIntegralImages = Array(11) // Complete renovations
+   const reformaBanosImages = Array(17)    // Bathroom renovations
+   const duranteObraImages = Array(6)      // Construction process
    ```
 
 ### Supported Image Formats
@@ -260,16 +323,22 @@ This creates a `dist/` folder with the production build.
 
 ### Deployment Options
 
-- **Netlify**: Connect your Git repository for automatic deployments
-- **Vercel**: Import project from Git for seamless deployment
-- **Static hosting**: Upload `dist/` folder to any static host
+- **Vercel** (Recommended): This project is optimized for Vercel with server-side rendering
+  - Automatic deployments from Git
+  - Built-in environment variable management
+  - Edge functions support for API routes
+- **Netlify**: Also supports Astro with server-side rendering
+- **Static hosting**: Can be built for static deployment by changing `output` in `astro.config.mjs`
 
 ### Environment Variables in Production
 
 Remember to set your environment variables in your hosting platform:
 
-- `PUBLIC_SUPABASE_URL`
-- `PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_KEY`
+- `SECRET_KEY`
+
+> **Important**: Since this project uses Vercel adapter with server-side rendering (`output: "server"`), make sure to configure these variables in your Vercel dashboard under Project Settings > Environment Variables.
 
 ## 📱 Features Overview
 
@@ -286,6 +355,34 @@ Remember to set your environment variables in your hosting platform:
 - Navigate with arrows, keyboard, or swipes
 - Shows image counter and category
 - Responsive design for all devices
+
+## 🔧 Development Setup
+
+### VS Code Configuration
+
+This project includes VS Code configuration files:
+
+- **`.vscode/extensions.json`**: Recommended extensions for optimal development experience
+- **`.vscode/launch.json`**: Debug configuration for Astro applications
+
+### Recommended Extensions
+
+The project suggests installing:
+
+- Astro extension for syntax highlighting and IntelliSense
+- TypeScript and JavaScript language support
+- CSS/SCSS support extensions
+
+### Development Server
+
+The development server runs with the `--host` flag, allowing external access:
+
+```bash
+npm run dev
+# Server accessible at:
+# - Local: http://localhost:4321
+# - Network: http://[your-ip]:4321
+```
 
 ## 📞 Support
 
